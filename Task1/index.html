@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Craft Studio — Digital Craftsmanship</title>
+  <meta name="description" content="A responsive frontend interface built with semantic HTML5, CSS Grid, Flexbox and vanilla JavaScript." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Skip link: accessibility requirement (WCAG) -->
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <!-- ===================== HEADER + NAV ===================== -->
+  <header class="site-header">
+    <div class="nav-wrap">
+      <a href="#top" class="logo">Craft<span>Studio</span></a>
+
+      <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="primaryNav" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+
+      <nav class="primary-nav" id="primaryNav" aria-label="Primary">
+        <ul>
+          <li><a href="#services">Toolkit</a></li>
+          <li><a href="#work">Work</a></li>
+          <li><a href="#about">Philosophy</a></li>
+          <li><a href="#contact" class="nav-cta">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- ===================== HERO ===================== -->
+    <section class="hero" id="top">
+      <div class="hero-inner">
+        <p class="eyebrow">Digital Craftsmanship</p>
+        <h1>Build the Future,<br>one breakpoint at a time.</h1>
+        <p class="hero-sub">
+          We design and build responsive web interfaces that adapt to every screen —
+          without relying on a single framework. Just HTML, CSS, and JavaScript, crafted with intent.
+        </p>
+        <div class="hero-actions">
+          <a href="#work" class="btn btn-primary">See Our Work</a>
+          <a href="#contact" class="btn btn-ghost">Start a Project</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== TOOLKIT / SERVICES ===================== -->
+    <section class="section" id="services" aria-labelledby="services-title">
+      <div class="section-head">
+        <p class="eyebrow">What We Use</p>
+        <h2 id="services-title">The Toolkit</h2>
+        <p class="section-desc">No frameworks. Just mastery of the fundamentals.</p>
+      </div>
+
+      <div class="card-grid">
+        <article class="card">
+          <div class="card-icon" aria-hidden="true">🏗️</div>
+          <h3>HTML5</h3>
+          <p class="card-role">The Infrastructure</p>
+          <p>Semantic landmarks and structural meaning — the right element for the right job, not just divs.</p>
+        </article>
+
+        <article class="card">
+          <div class="card-icon" aria-hidden="true">🎨</div>
+          <h3>CSS3</h3>
+          <p class="card-role">The Skin</p>
+          <p>Responsive styling using Grid for macro layouts and Flexbox for micro components.</p>
+        </article>
+
+        <article class="card">
+          <div class="card-icon" aria-hidden="true">⚙️</div>
+          <h3>JavaScript</h3>
+          <p class="card-role">The Logic</p>
+          <p>Lightweight state management and interactive functionality, kept simple and readable.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===================== WORK / CONTENT GRID ===================== -->
+    <section class="section section-alt" id="work" aria-labelledby="work-title">
+      <div class="section-head">
+        <p class="eyebrow">Content Grid</p>
+        <h2 id="work-title">Recent Builds</h2>
+      </div>
+
+      <div class="work-grid">
+        <article class="work-card">
+          <div class="work-thumb thumb-a" role="img" aria-label="Preview of a portfolio layout"></div>
+          <h3>Portfolio Layout</h3>
+          <p>A single-column-first design that expands into a two-column grid at tablet width.</p>
+        </article>
+        <article class="work-card">
+          <div class="work-thumb thumb-b" role="img" aria-label="Preview of a dashboard layout"></div>
+          <h3>Dashboard Shell</h3>
+          <p>Sidebar and main content built with CSS Grid, collapsing gracefully on small screens.</p>
+        </article>
+        <article class="work-card">
+          <div class="work-thumb thumb-c" role="img" aria-label="Preview of a landing page"></div>
+          <h3>Landing Page</h3>
+          <p>Fluid typography using clamp(), so headings scale smoothly with the viewport.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===================== ABOUT / PHILOSOPHY ===================== -->
+    <section class="section" id="about" aria-labelledby="about-title">
+      <div class="about-grid">
+        <div class="about-copy">
+          <p class="eyebrow">Our Philosophy</p>
+          <h2 id="about-title">The web is a dynamic, inclusive information system.</h2>
+          <p>
+            We build mobile-first: start with a single column, then use min-width media queries
+            to expand the layout at 768px (tablet) and 1024px (desktop). Every interface is checked
+            for accessibility, because adaptability isn't optional — it's the standard.
+          </p>
+          <ul class="about-list">
+            <li>Mobile-first, progressively enhanced</li>
+            <li>Semantic HTML for accessibility &amp; SEO</li>
+            <li>Fluid type with <code>clamp()</code></li>
+          </ul>
+        </div>
+        <aside class="about-stats" aria-label="Design standards">
+          <div class="stat"><span class="stat-num">768px</span><span>Tablet breakpoint</span></div>
+          <div class="stat"><span class="stat-num">1024px</span><span>Desktop breakpoint</span></div>
+          <div class="stat"><span class="stat-num">100%</span><span>Framework-free</span></div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ===================== CONTACT ===================== -->
+    <section class="section section-alt" id="contact" aria-labelledby="contact-title">
+      <div class="section-head">
+        <p class="eyebrow">Get In Touch</p>
+        <h2 id="contact-title">Start a Project</h2>
+      </div>
+
+      <form class="contact-form" id="contactForm" novalidate>
+        <div class="form-row">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" required minlength="2" autocomplete="name">
+          <span class="error-msg" id="nameError" role="alert"></span>
+        </div>
+
+        <div class="form-row">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required autocomplete="email">
+          <span class="error-msg" id="emailError" role="alert"></span>
+        </div>
+
+        <div class="form-row">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" rows="4" required minlength="10"></textarea>
+          <span class="error-msg" id="messageError" role="alert"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Send Message</button>
+        <p class="form-success" id="formSuccess" role="status"></p>
+      </form>
+    </section>
+
+  </main>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p>&copy; <span id="year"></span> CraftStudio. Built for the DecodeLabs Full Stack Internship — Project 1.</p>
+      <ul class="footer-links">
+        <li><a href="tel:+918933006408">+91 89330 06408</a></li>
+        <li><a href="mailto:decodelabs.tech@gmail.com">decodelabs.tech@gmail.com</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
