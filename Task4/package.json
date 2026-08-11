@@ -1,0 +1,18 @@
+{
+  "name": "teampulse-project4-backend",
+  "version": "1.0.0",
+  "description": "TeamPulse Internship Project 4 - Backend (Process / Cognitive Layer). Provides a RESTful JSON API that the frontend consumes over fetch().",
+  "main": "server.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "keywords": ["express", "rest-api", "cors", "teampulse", "internship"],
+  "author": "TeamPulse Intern",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2"
+  }
+}

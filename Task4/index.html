@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>TeamPulse · Intern Console</title>
+<meta name="description" content="TeamPulse — a full-stack intern management console demonstrating frontend/backend integration." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- ============================= HEADER ============================= -->
+  <header class="topbar">
+    <div class="topbar__brand">
+      <span class="brand-mark" aria-hidden="true">
+        <svg width="30" height="30" viewBox="0 0 30 30" fill="none">
+          <circle cx="6" cy="15" r="4" class="node-a"/>
+          <circle cx="24" cy="15" r="4" class="node-b"/>
+          <line x1="10" y1="15" x2="20" y2="15" class="signal-line"/>
+          <circle r="2" class="signal-pulse">
+            <animateMotion dur="1.8s" repeatCount="indefinite" path="M10,15 L20,15" />
+          </circle>
+        </svg>
+      </span>
+      <div class="brand-text">
+        <span class="brand-title">TeamPulse</span>
+        <span class="brand-subtitle">Intern Management Console</span>
+      </div>
+    </div>
+
+    <div class="topbar__meta">
+      <span id="apiStatus" class="status-pill status-pill--pending">
+        <span class="status-dot"></span> Checking backend…
+      </span>
+      <button id="themeToggle" class="icon-btn" type="button" aria-label="Toggle color theme" title="Toggle light / dark theme">
+        <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+        <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- ============================ MAIN APP ============================= -->
+  <main class="app">
+
+    <!-- ---- Hero / architecture strip ---- -->
+    <section class="hero">
+      <div class="hero__copy">
+        <p class="eyebrow">Frontend &amp; Backend Integration</p>
+        <h1>One system, two layers, zero freezes.</h1>
+        <p class="hero__desc">
+          This console is the frontend (sensory layer). Every action below — loading interns, adding one,
+          editing a record, removing one — sends an asynchronous <code>fetch()</code> request across the
+          network to the TeamPulse API (cognitive layer) and renders the response back into the DOM.
+        </p>
+      </div>
+      <div class="hero__flow" aria-hidden="true">
+        <div class="flow-node">Client<br><span>Request</span></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node flow-node--accent">Server<br><span>Process</span></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node">Client<br><span>Response</span></div>
+      </div>
+    </section>
+
+    <!-- ---- Stats ---- -->
+    <section class="stats" id="statsSection" aria-label="Intern statistics">
+      <article class="stat-card">
+        <span class="stat-label">Total Interns</span>
+        <span class="stat-value" id="statTotal">—</span>
+      </article>
+      <article class="stat-card">
+        <span class="stat-label">Active</span>
+        <span class="stat-value stat-value--ok" id="statActive">—</span>
+      </article>
+      <article class="stat-card">
+        <span class="stat-label">On Leave</span>
+        <span class="stat-value stat-value--warn" id="statLeave">—</span>
+      </article>
+      <article class="stat-card">
+        <span class="stat-label">Departments</span>
+        <span class="stat-value" id="statDepts">—</span>
+      </article>
+    </section>
+
+    <!-- ---- Toolbar ---- -->
+    <section class="toolbar">
+      <div class="search-wrap">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input id="searchInput" type="search" placeholder="Search by name, role or email…" aria-label="Search interns" />
+      </div>
+
+      <select id="departmentFilter" aria-label="Filter by department">
+        <option value="">All departments</option>
+      </select>
+
+      <select id="statusFilter" aria-label="Filter by status">
+        <option value="">All statuses</option>
+        <option value="active">Active</option>
+        <option value="on-leave">On leave</option>
+      </select>
+
+      <button id="refreshBtn" class="btn btn--ghost" type="button">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+        Refresh
+      </button>
+
+      <button id="addInternBtn" class="btn btn--primary" type="button">+ Add Intern</button>
+    </section>
+
+    <!-- ---- Content states ---- -->
+    <section class="content" aria-live="polite">
+
+      <!-- Loading skeleton -->
+      <div id="loadingState" class="grid" hidden>
+        <div class="card card--skeleton"></div>
+        <div class="card card--skeleton"></div>
+        <div class="card card--skeleton"></div>
+      </div>
+
+      <!-- Error / fallback UI -->
+      <div id="errorState" class="empty-state" hidden>
+        <div class="empty-state__icon">⚠</div>
+        <h3>We couldn't reach the backend</h3>
+        <p id="errorMessage">Check that the API server is running, then try again.</p>
+        <button id="retryBtn" class="btn btn--primary" type="button">Retry</button>
+      </div>
+
+      <!-- Empty result set -->
+      <div id="emptyState" class="empty-state" hidden>
+        <div class="empty-state__icon">🗂</div>
+        <h3>No interns match this view</h3>
+        <p>Try clearing your filters, or add the first record.</p>
+      </div>
+
+      <!-- Data grid -->
+      <div id="internGrid" class="grid" hidden></div>
+    </section>
+  </main>
+
+  <!-- ============================ MODAL FORM ============================ -->
+  <div id="internModal" class="modal-overlay" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal__header">
+        <h2 id="modalTitle">Add Intern</h2>
+        <button id="closeModalBtn" class="icon-btn" type="button" aria-label="Close">✕</button>
+      </div>
+      <form id="internForm" class="modal__body" novalidate>
+        <input type="hidden" id="internId" />
+
+        <label class="field">
+          <span>Full name</span>
+          <input type="text" id="fieldName" required maxlength="80" placeholder="e.g. Muhammad Hamza" />
+        </label>
+
+        <label class="field">
+          <span>Role</span>
+          <input type="text" id="fieldRole" required maxlength="80" placeholder="e.g. Frontend Developer Intern" />
+        </label>
+
+        <label class="field">
+          <span>Department</span>
+          <input type="text" id="fieldDepartment" required maxlength="60" placeholder="e.g. Engineering" list="deptSuggestions" />
+          <datalist id="deptSuggestions"></datalist>
+        </label>
+
+        <label class="field">
+          <span>Email</span>
+          <input type="email" id="fieldEmail" required placeholder="name@teampulse.dev" />
+        </label>
+
+        <label class="field">
+          <span>Status</span>
+          <select id="fieldStatus">
+            <option value="active">Active</option>
+            <option value="on-leave">On leave</option>
+          </select>
+        </label>
+
+        <p id="formError" class="form-error" hidden></p>
+
+        <div class="modal__footer">
+          <button type="button" id="cancelModalBtn" class="btn btn--ghost">Cancel</button>
+          <button type="submit" id="submitBtn" class="btn btn--primary">Save Intern</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Reusable confirm dialog for delete -->
+  <div id="confirmModal" class="modal-overlay" hidden>
+    <div class="modal modal--sm" role="alertdialog" aria-modal="true">
+      <div class="modal__body">
+        <h3>Remove this intern?</h3>
+        <p id="confirmText" class="muted">This action can't be undone.</p>
+        <div class="modal__footer">
+          <button id="confirmCancelBtn" class="btn btn--ghost" type="button">Cancel</button>
+          <button id="confirmDeleteBtn" class="btn btn--danger" type="button">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast container -->
+  <div id="toastContainer" class="toast-container" aria-live="polite"></div>
+
+  <footer class="footer">
+    <p>TeamPulse — Frontend &amp; Backend Integration · Built with fetch(), async/await &amp; REST.</p>
+  </footer>
+
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

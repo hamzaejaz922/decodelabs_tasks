@@ -1,0 +1,47 @@
+[
+  {
+    "id": "e1a1",
+    "name": "Muhammad Hamza",
+    "role": "Frontend Developer Intern",
+    "department": "Engineering",
+    "email": "muhammad.hamza@teampulse.dev",
+    "status": "active",
+    "joined": "2026-01-12"
+  },
+  {
+    "id": "e1a2",
+    "name": "Muhammad Mahad",
+    "role": "Backend Developer Intern",
+    "department": "Engineering",
+    "email": "muhammad.mahad@teampulse.dev",
+    "status": "active",
+    "joined": "2026-02-03"
+  },
+  {
+    "id": "e1a3",
+    "name": "Muhammad Fahad",
+    "role": "UI/UX Design Intern",
+    "department": "Design",
+    "email": "muhammad.fahad@teampulse.dev",
+    "status": "active",
+    "joined": "2026-01-20"
+  },
+  {
+    "id": "e1a4",
+    "name": "Asim Ali",
+    "role": "QA Intern",
+    "department": "Quality Assurance",
+    "email": "asim.ali@teampulse.dev",
+    "status": "on-leave",
+    "joined": "2025-12-01"
+  },
+  {
+    "id": "e1a5",
+    "name": "Talha Khan",
+    "role": "Data Analyst Intern",
+    "department": "Data",
+    "email": "talha.khan@teampulse.dev",
+    "status": "active",
+    "joined": "2026-03-05"
+  }
+]
