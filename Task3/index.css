@@ -1,0 +1,93 @@
+:root {
+  /* Color tokens */
+  --bg: #0F1420;
+  --bg-elevated: #161C2C;
+  --bg-card: #1B2236;
+  --border: #2A3348;
+  --border-soft: #232B40;
+  --text: #E9EBF3;
+  --text-muted: #8A93AC;
+  --text-faint: #5B6472;
+
+  --stage-todo: #5B6472;
+  --stage-progress: #2DD4BF;
+  --stage-done: #8B7CF6;
+
+  --priority-high: #F5735A;
+  --priority-medium: #F0B429;
+  --priority-low: #4B90F0;
+
+  --danger: #F5735A;
+  --danger-bg: rgba(245, 115, 90, 0.12);
+
+  /* Type */
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --radius: 10px;
+  --radius-sm: 6px;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+input, textarea, select {
+  font-family: inherit;
+}
+
+a {
+  color: inherit;
+}
+
+::selection {
+  background: rgba(45, 212, 191, 0.3);
+}
+
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--stage-progress);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 8px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-faint);
+}

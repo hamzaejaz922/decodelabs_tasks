@@ -1,0 +1,152 @@
+.sidebar {
+  width: 240px;
+  min-width: 240px;
+  background: var(--bg-elevated);
+  border-right: 1px solid var(--border-soft);
+  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+}
+
+.sidebar__logo {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-bottom: 36px;
+}
+
+.sidebar__dots {
+  display: flex;
+  gap: 5px;
+}
+.sidebar__dots span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+.sidebar__dots span:nth-child(1) { background: var(--stage-todo); }
+.sidebar__dots span:nth-child(2) { background: var(--stage-progress); }
+.sidebar__dots span:nth-child(3) { background: var(--stage-done); }
+
+.sidebar__label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-faint);
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.sidebar__stages {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.sidebar__stages li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  padding: 8px 0;
+  color: var(--text-muted);
+}
+
+.sidebar__stages .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.sidebar__stages .count {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-faint);
+}
+
+.sidebar__overdue {
+  margin-top: 20px;
+  background: var(--danger-bg);
+  border: 1px solid rgba(245, 115, 90, 0.3);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  font-size: 13px;
+  color: var(--priority-high);
+}
+
+.sidebar__spacer {
+  flex: 1;
+}
+
+.sidebar__user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border-soft);
+}
+
+.sidebar__avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--stage-progress), var(--stage-done));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  color: #0F1420;
+  flex-shrink: 0;
+}
+
+.sidebar__user-info {
+  min-width: 0;
+}
+
+.sidebar__user-name {
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sidebar__user-email {
+  font-size: 12px;
+  color: var(--text-faint);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sidebar__logout {
+  margin-top: 14px;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  border-radius: var(--radius-sm);
+  padding: 9px 12px;
+  font-size: 13px;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.sidebar__logout:hover {
+  border-color: var(--priority-high);
+  color: var(--priority-high);
+}
+
+@media (max-width: 860px) {
+  .sidebar {
+    display: none;
+  }
+}
