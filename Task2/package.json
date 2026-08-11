@@ -1,0 +1,17 @@
+{
+  "name": "decodelabs-user-api",
+  "version": "1.0.0",
+  "description": "Project 2: Backend API Development - DecodeLabs Full Stack Internship Kit",
+  "main": "server.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "keywords": ["api", "rest", "express", "backend", "internship"],
+  "author": "DecodeLabs Intern",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}

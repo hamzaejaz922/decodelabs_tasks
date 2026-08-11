@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>DecodeLabs User API — Demo Frontend</title>
+<style>
+  :root {
+    --green: #6b8e5a;
+    --bg: #eef6ee;
+    --card: #ffffff;
+    --danger: #c0392b;
+    --text: #2f3e2f;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    background: linear-gradient(135deg, #dff0e0, #dbe9f7);
+    margin: 0;
+    padding: 2rem;
+    color: var(--text);
+  }
+  .container { max-width: 720px; margin: 0 auto; }
+  h1 { font-size: 1.6rem; margin-bottom: 0.2rem; }
+  p.subtitle { margin-top: 0; color: #566b56; }
+  .card {
+    background: var(--card);
+    border-radius: 14px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+    margin-bottom: 1.5rem;
+  }
+  .card h2 { margin-top: 0; font-size: 1.1rem; }
+  input, select {
+    width: 100%;
+    padding: 0.6rem 0.7rem;
+    margin-bottom: 0.7rem;
+    border-radius: 8px;
+    border: 1px solid #cdd9cd;
+    font-size: 0.95rem;
+  }
+  button {
+    background: var(--green);
+    color: white;
+    border: none;
+    padding: 0.6rem 1.1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.95rem;
+  }
+  button:hover { opacity: 0.9; }
+  #status-msg {
+    margin-top: 0.7rem;
+    font-size: 0.9rem;
+    min-height: 1.2em;
+  }
+  #status-msg.error { color: var(--danger); }
+  #status-msg.success { color: var(--green); }
+
+  table { width: 100%; border-collapse: collapse; margin-top: 0.5rem; }
+  th, td { text-align: left; padding: 0.5rem; border-bottom: 1px solid #e3ebe3; font-size: 0.9rem; }
+  th { color: #567056; }
+  .del-btn {
+    background: var(--danger);
+    padding: 0.3rem 0.6rem;
+    font-size: 0.8rem;
+  }
+  .role-badge {
+    font-size: 0.75rem;
+    padding: 0.15rem 0.5rem;
+    border-radius: 10px;
+    background: #e6f0e6;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>DecodeLabs User API</h1>
+  <p class="subtitle">Project 2 — Demo Frontend (optional). Talks to the backend API at <code>/api/users</code>.</p>
+
+  <div class="card">
+    <h2>Add a new user</h2>
+    <input id="name" type="text" placeholder="Full name (e.g. Zainab Iqbal)" />
+    <input id="email" type="email" placeholder="Email (e.g. zainab@example.com)" />
+    <select id="role">
+      <option value="user">user</option>
+      <option value="admin">admin</option>
+    </select>
+    <button onclick="createUser()">Create User</button>
+    <div id="status-msg"></div>
+  </div>
+
+  <div class="card">
+    <h2>All Users</h2>
+    <button onclick="loadUsers()">🔄 Refresh</button>
+    <table>
+      <thead>
+        <tr><th>ID</th><th>Name</th><th>Email</th><th>Role</th><th></th></tr>
+      </thead>
+      <tbody id="users-table"></tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+  // Change this if your API runs on a different port/host
+  const API_BASE = "http://localhost:3000/api/users";
+
+  function showStatus(message, type) {
+    const el = document.getElementById("status-msg");
+    el.textContent = message;
+    el.className = type;
+  }
+
+  async function loadUsers() {
+    try {
+      const res = await fetch(API_BASE);
+      const json = await res.json();
+      const tbody = document.getElementById("users-table");
+      tbody.innerHTML = "";
+
+      json.data.forEach(user => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${user.id}</td>
+          <td>${user.name}</td>
+          <td>${user.email}</td>
+          <td><span class="role-badge">${user.role}</span></td>
+          <td><button class="del-btn" onclick="deleteUser(${user.id})">Delete</button></td>
+        `;
+        tbody.appendChild(row);
+      });
+    } catch (err) {
+      showStatus("Could not reach the API. Is the server running on localhost:3000?", "error");
+    }
+  }
+
+  async function createUser() {
+    const name = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const role = document.getElementById("role").value;
+
+    try {
+      const res = await fetch(API_BASE, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, role }),
+      });
+      const json = await res.json();
+
+      if (!res.ok) {
+        showStatus(json.errors ? json.errors.join(" ") : json.message, "error");
+        return;
+      }
+
+      showStatus(`✅ User "${json.data.name}" created.`, "success");
+      document.getElementById("name").value = "";
+      document.getElementById("email").value = "";
+      loadUsers();
+    } catch (err) {
+      showStatus("Could not reach the API. Is the server running on localhost:3000?", "error");
+    }
+  }
+
+  async function deleteUser(id) {
+    try {
+      const res = await fetch(`${API_BASE}/${id}`, { method: "DELETE" });
+      if (res.status === 204) {
+        showStatus(`🗑️ User ${id} deleted.`, "success");
+        loadUsers();
+      } else {
+        const json = await res.json();
+        showStatus(json.message, "error");
+      }
+    } catch (err) {
+      showStatus("Could not reach the API.", "error");
+    }
+  }
+
+  // Load users on page open
+  loadUsers();
+</script>
+</body>
+</html>
